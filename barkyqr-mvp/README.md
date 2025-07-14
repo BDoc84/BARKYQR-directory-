@@ -1,40 +1,256 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# BarkYQR MVP - Regina's Dog Business Directory
 
-## Getting Started
+A modern, community-driven directory for dog-friendly businesses in Regina, Saskatchewan. Built with Next.js, featuring business submissions, photo uploads, admin moderation, and weekly events.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Public Features
+- **Homepage** with rotating weekly events banner
+- **Business submission form** with photo uploads (up to 5 photos, JPG/PNG only)
+- **Public listing display** in clean grid format
+- **Individual business pages** with photo galleries and contact links
+- **Mobile-first responsive design** using BarkYQR brand colors (black, blue, white)
+
+### Admin Features
+- **Secure admin dashboard** at `/admin`
+- **Business approval/rejection** workflow
+- **Photo moderation** with individual photo deletion
+- **Complete listing management** (approve, reject, delete)
+- **Real-time statistics** (pending, approved, rejected counts)
+
+### Technical Features
+- **Local JSON storage** for business listings and events
+- **File upload handling** with validation and size limits
+- **Auto-hiding events** (events past their date are automatically filtered)
+- **Static generation** with ISR for performance
+- **Admin authentication** with simple password protection
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 14 (Pages Router)
+- **Styling**: TailwindCSS with custom brand colors
+- **File Uploads**: Formidable for server-side processing
+- **Storage**: Local JSON files + `/public/uploads` for images
+- **TypeScript**: Full type safety
+- **Deployment**: Optimized for Vercel
+
+## 📁 Project Structure
+
+```
+barkyqr-mvp/
+├── src/
+│   ├── components/          # Reusable UI components
+│   │   ├── Layout.tsx       # Main app layout with header/footer
+│   │   ├── BusinessCard.tsx # Business listing card
+│   │   └── EventsBanner.tsx # Weekly events display
+│   ├── lib/                 # Utility functions and data management
+│   │   ├── types.ts         # TypeScript type definitions
+│   │   └── data.ts          # JSON file operations and business logic
+│   ├── pages/               # Next.js pages
+│   │   ├── api/             # API routes
+│   │   │   ├── submit.ts    # Business submission endpoint
+│   │   │   └── admin/       # Admin API routes
+│   │   ├── listings/        # Business listings pages
+│   │   ├── index.tsx        # Homepage
+│   │   ├── submit.tsx       # Business submission form
+│   │   └── admin.tsx        # Admin dashboard
+│   └── styles/
+│       └── globals.css      # Global styles and utilities
+├── public/
+│   └── uploads/             # Uploaded business photos (auto-created)
+├── data/                    # JSON storage files (auto-created)
+└── ...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Quick Start
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### 1. Clone and Install
+```bash
+git clone <your-repo-url>
+cd barkyqr-mvp
+npm install
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+### 2. Start Development Server
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-## Learn More
+### 3. Admin Access
+- Navigate to [http://localhost:3000/admin](http://localhost:3000/admin)
+- **Password**: `barkyqr2024`
 
-To learn more about Next.js, take a look at the following resources:
+## 💾 Data Storage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+### Business Listings
+- Stored in `/data/listings.json`
+- Auto-created on first submission
+- Contains business info, status, and photo paths
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Events
+- Stored in `/data/events.json`
+- Pre-populated with sample events using dynamic dates
+- Events auto-hide after their date passes
 
-## Deploy on Vercel
+### Uploaded Photos
+- Stored in `/public/uploads/`
+- Accessible via `/uploads/filename.jpg`
+- Original filenames are randomized for security
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔧 Configuration
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+### Admin Password
+Update in `/src/pages/api/admin/auth.ts`:
+```typescript
+const ADMIN_PASSWORD = 'your-secure-password';
+```
+
+### Brand Colors
+Defined in `tailwind.config.ts`:
+```typescript
+'bark-blue': {
+  600: '#2563eb', // Primary blue
+  // ... other shades
+},
+'bark-black': '#000000',
+'bark-white': '#ffffff',
+```
+
+### File Upload Limits
+Configure in `/src/pages/api/submit.ts`:
+```typescript
+maxFileSize: 5 * 1024 * 1024, // 5MB limit
+maxFiles: 5,                   // Max 5 photos
+```
+
+## 📝 Usage Guide
+
+### For Business Owners
+1. Visit `/submit`
+2. Fill out business information
+3. Upload up to 5 photos (JPG/PNG, max 5MB each)
+4. Submit and wait for admin approval
+5. Business appears in public listings once approved
+
+### For Administrators
+1. Login at `/admin` with password: `barkyqr2024`
+2. Review pending submissions
+3. Approve ✅ or reject ❌ listings
+4. Delete 🗑️ inappropriate photos or entire listings
+5. Monitor site statistics
+
+### For Visitors
+1. Browse businesses at `/listings`
+2. View individual business details with photo galleries
+3. Check weekly events on homepage
+4. Contact businesses via website/Instagram links
+
+## 🚀 Deployment to Vercel
+
+### Option 1: Vercel CLI (Recommended)
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy from project directory
+vercel
+
+# Follow prompts to configure your project
+```
+
+### Option 2: Git Integration
+1. Push your code to GitHub/GitLab/Bitbucket
+2. Connect your repo at [vercel.com/new](https://vercel.com/new)
+3. Vercel auto-detects Next.js and deploys
+
+### Important Deployment Notes
+
+⚠️ **File Upload Limitations**: 
+- Vercel serverless functions have size limits
+- For production, consider:
+  - AWS S3 for file storage
+  - Cloudinary for image management
+  - Database instead of JSON files
+
+🔒 **Security for Production**:
+- Use environment variables for admin password
+- Implement proper session management
+- Add rate limiting for submissions
+- Use HTTPS for admin access
+
+## 🔮 Future Enhancements
+
+### Near Term
+- **Google Calendar integration** for dynamic events
+- **Email notifications** for new submissions
+- **Search and filtering** for business listings
+- **Image optimization** and resizing
+
+### Long Term
+- **Database migration** (PostgreSQL, MongoDB)
+- **User accounts** for business owners
+- **Review system** for businesses
+- **Map integration** for business locations
+- **API for mobile apps**
+
+## 🛡️ Security Considerations
+
+### Current Implementation (MVP)
+- Simple password authentication
+- Basic file validation
+- No rate limiting
+- Local file storage
+
+### Production Recommendations
+- JWT tokens with expiration
+- Database with proper authentication
+- Rate limiting and CSRF protection
+- Cloud storage for uploads
+- SSL/HTTPS enforcement
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**"Module not found" errors**
+```bash
+npm install
+rm -rf .next
+npm run dev
+```
+
+**Upload directory not created**
+- Ensure `/public/uploads/` exists
+- Check file permissions
+
+**Admin login not working**
+- Verify password in `/src/pages/api/admin/auth.ts`
+- Clear browser localStorage
+
+**Images not displaying**
+- Check file paths in JSON data
+- Verify files exist in `/public/uploads/`
+
+## 📄 License
+
+Open source project for the Regina dog community.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+---
+
+**Built with ❤️ for Regina's dog community**
+
+*Need help? Check the issues section or contact the development team.*
