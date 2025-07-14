@@ -18,11 +18,19 @@ function initializeData() {
   
   if (!fs.existsSync(EVENTS_FILE)) {
     // Initialize with some sample events
+    // Generate upcoming dates for demo
+    const today = new Date();
+    const getDateString = (daysFromNow: number) => {
+      const date = new Date(today);
+      date.setDate(date.getDate() + daysFromNow);
+      return date.toISOString().split('T')[0];
+    };
+
     const sampleEvents: WeeklyEvent[] = [
       {
         id: '1',
         name: 'Regina Dog Park Meetup',
-        date: '2024-01-20',
+        date: getDateString(1),
         time: '10:00 AM',
         description: 'Weekly meetup at Kinsmen Dog Park for socialization',
         isActive: true
@@ -30,7 +38,7 @@ function initializeData() {
       {
         id: '2',
         name: 'Puppy Training Class',
-        date: '2024-01-22',
+        date: getDateString(3),
         time: '6:00 PM',
         description: 'Basic training for puppies 6 months and under',
         isActive: true
@@ -38,7 +46,7 @@ function initializeData() {
       {
         id: '3',
         name: 'Dog-Friendly Market',
-        date: '2024-01-25',
+        date: getDateString(6),
         time: '9:00 AM',
         description: 'Bring your pup to the Regina Farmers Market',
         isActive: true
