@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+  /* BarkYQR Brand Colors */
+  --bark-blue: #2563eb;
+  --bark-black: #000000;
+  --bark-white: #ffffff;
+  --bark-blue-light: #3b82f6;
+  --bark-blue-dark: #1d4ed8;
+  --gray-light: #f8fafc;
+  --gray-medium: #64748b;
+  --gray-dark: #334155;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--bark-blue);
+  --color-primary-dark: var(--bark-blue-dark);
+  --color-primary-light: var(--bark-blue-light);
+  --color-black: var(--bark-black);
+  --color-white: var(--bark-white);
+  --color-gray-light: var(--gray-light);
+  --color-gray-medium: var(--gray-medium);
+  --color-gray-dark: var(--gray-dark);
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gray-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-medium);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-dark);
+}
+
+/* Focus styles for accessibility */
+.focus-visible {
+  outline: 2px solid var(--bark-blue);
+  outline-offset: 2px;
+}
+
+/* Smooth transitions */
+* {
+  transition: colors 0.2s ease-in-out;
+}
